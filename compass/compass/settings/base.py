@@ -110,6 +110,12 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    # package for schema migration
+    'south',
+    # package for external authentication
+    'django_openid_auth',
+    # our homegrown apps
+    'people',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -140,3 +146,21 @@ LOGGING = {
         },
     }
 }
+
+# settings for openid authentication
+
+AUTH_USER_MODEL = 'people.CompassUser'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = '/logout/'
+
+AUTHENTICATION_BACKENDS = (
+    'django_openid_auth.auth.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+OPENID_CREATE_USERS = True
+OPENID_USE_EMAIL_FOR_USERNAME = True
+OPENID_USE_AS_ADMIN_LOGIN = True
+OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
