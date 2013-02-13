@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load activelink %}
+
+{% block sidenav %}
+<div class="well sidebar-nav">
+  <ul class="nav nav-list">
+    <li class="nav-header">Events</li>
+    <li {% ifactive "events" %}class="active"{% endifactive %}>
+      <a href="{% url "events" %}">Your Events</a>
+    </li>
+    <li {% ifactive "event_create" %}class="active"{% endifactive %}>
+      <a href="{% url "event_create" %}">Create New Event</a>
+    </li>
+    <li {% ifactive "events_update" %}class="active"{% endifactive %}>
+      <a href="{% url "events_update" %}">Update Existing Events</a>
+    </li>
+  </ul>
+</div>
+{% endblock sidenav %}

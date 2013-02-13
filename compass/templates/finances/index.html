@@ -1,0 +1,21 @@
+{% extends "finances.html" %}
+{% load render_table from django_tables2 %}
+
+{% block content %}
+
+<h3>Recent Donations</h3>
+<div class="row-fluid">
+
+<div class="span6">
+<h4>Individuals</h4>
+{% render_table recent_individual %}
+</div>
+
+<div class="span6">
+<h4>Businesses</h4>
+{% render_table recent_business %}
+</div>
+
+</div>
+
+{% endblock %}

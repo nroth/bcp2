@@ -1,0 +1,29 @@
+{% extends "finances.html" %}
+{% load render_table from django_tables2 %}
+
+{% block title%}Campaign{% endblock %}
+
+{% block content %}
+
+
+
+<h4>Campaign</h4>
+{{ campaign.name }}
+{{ campaign.start_date }}
+{{ campaign.end_date }}
+
+<div class="row-fluid">
+<div class="span6">
+<h4>Individual Asks</h4>
+{% render_table individual_asks %}
+</div>
+
+<div class="span6">
+<h4>Business Asks</h4>
+{% render_table business_asks %}
+</div>
+</div>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

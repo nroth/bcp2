@@ -1,0 +1,15 @@
+{% extends "finances.html" %}
+{% load crispy_forms_tags %}
+{% load render_table from django_tables2 %}
+
+{% block content %}
+{% crispy form %}
+{% if table %}
+{% render_table table %}
+{% else %}
+<p>No results</p>
+{% endif %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+

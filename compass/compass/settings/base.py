@@ -1,5 +1,17 @@
 # Django settings for compass project.
+import os
 from unipath import Path
+from django.contrib import messages
+from django.core.exceptions import ImproperlyConfigured
+
+# inspired by the two scoops of django folks
+def getenv(name):
+    """ Get the environment variable or return exception """
+    try:
+        return os.environ[name]
+    except KeyError:
+        msg = "getenv({0}) failed".format(name)
+        raise ImproperlyConfigured(msg)
 
 PROJECT_ROOT = Path(__file__).ancestor(3)
 
@@ -56,7 +68,8 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-#    PROJECT_ROOT.child('static'),
+    PROJECT_ROOT.child('bootstrap'),
+    PROJECT_ROOT.child('bcpstyle'),
 )
 
 # List of finder classes that know how to find static files in
@@ -66,9 +79,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '3ij^k3a7vkax++xgpy29#@way31feq8nbe^l2r03wq+n=!5%9#'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -99,6 +109,17 @@ TEMPLATE_DIRS = (
     PROJECT_ROOT.child('templates'),
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.request", # for django-tables2
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,8 +135,18 @@ INSTALLED_APPS = (
     'south',
     # package for external authentication
     'django_openid_auth',
+    # so crispy
+    'crispy_forms',
+    # package for nice html tables
+    'django_tables2',
+    # package for nice html tables
+    'activelink',
+    # for filling in attendees
+    "djtokeninput",
     # our homegrown apps
     'people',
+    'events',
+    'finances',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -164,3 +195,11 @@ OPENID_CREATE_USERS = True
 OPENID_USE_EMAIL_FOR_USERNAME = True
 OPENID_USE_AS_ADMIN_LOGIN = True
 OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
+
+
+# set message tags for bootstrap
+MESSAGE_TAGS = {messages.DEBUG: 'debug',
+                messages.INFO: 'alert-info',
+                messages.SUCCESS: 'alert-success',
+                messages.WARNING: '',
+                messages.ERROR: 'alert-error',}

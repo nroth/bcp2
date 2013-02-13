@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome!</h1>
+<p>This in an internal data server for the Berkeley Compass Project.</p>
+{% if user.person %}
+<p>Use the top bar to navigate.</p>
+{% else %}
+{% if user.has_requested_person %}
+Your registration is pending admin approval.
+{% else %}
+<p>Please login.  This will automatically register you for an account if you don't already have one.</p>
+{% endif %}
+{% endif %}
+
+{% endblock content %}

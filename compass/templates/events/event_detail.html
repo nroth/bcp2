@@ -1,0 +1,26 @@
+{% extends "events.html" %}
+
+{% block title%}{{ event.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ event.title}}</h2>
+<p>{{ event.description}}</p>
+<p>{{ event.date }}</p>
+
+<h2>Organizers</h2>
+<ul>
+  {% for person in event.organizers.all %}
+  <li><a href="{% url 'person_detail' person.pk %}">{{ person }}</a></li>
+  {% endfor %}
+</ul>
+
+<h2>Attendees</h2>
+<ul>
+  {% for person in event.attendees.all %}
+  <li><a href="{% url 'person_detail' person.pk %}">{{ person }}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

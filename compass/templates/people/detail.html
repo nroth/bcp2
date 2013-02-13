@@ -1,0 +1,24 @@
+{% extends "people.html" %}
+
+{% block title%}{{ person.first_name }} {{ person.last_name }}{% endblock %}
+
+{% block content %}
+
+{% if person.public_profile %}
+
+<h3>Contact Info</h3>
+
+
+<address>
+{{ person.name }}<br>
+{{ person.street }}<br>
+{{ person.city }}, {{ person.state }} {{ person.postcode }}<br>
+{{ person.phone }}
+</address>
+
+{% else %}
+<p>{{ person }} has chosen not to make any information available.</p>
+{% endif %}
+{% endblock %}
+
+{% block footer %}{% endblock %}

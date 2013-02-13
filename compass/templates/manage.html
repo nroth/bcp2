@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title%}Pending Users{% endblock %}
+
+{% block content %}
+<h2>Pending Users</h2>
+<p>{{pending_count}} remaining</p>
+{% crispy form %}
+{% endblock %}
+
+{% block footer %}{% endblock %}

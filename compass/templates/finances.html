@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load activelink %}
+
+{% block sidenav %}
+<div class="well sidebar-nav">
+  <ul class="nav nav-list">
+    <li class="nav-header">Finances</li>
+    <li {% ifactive "finance" %}class="active"{% endifactive %}>
+      <a href="{% url "finances" %}">Home</a>
+    </li>
+    <li {% ifactive "donation_search" %}class="active"{% endifactive %}>
+      <a href="{% url "donation_search" %}">Search</a>
+    </li>
+    <li class="nav-header">Individuals</li>
+    <li {% ifactive "individual_list" %}class="active"{% endifactive %}>
+      <a href="{% url "individual_list" %}">Browse</a>
+    </li>
+    <li {% ifactive "individual_create" %}class="active"{% endifactive %}>
+      <a href="{% url "individual_create" %}">Add Contact</a>
+    </li>
+    <li {% ifactive "individualdonation_create" %}class="active"{% endifactive %}>
+      <a href="{% url "individualdonation_create" %}">Add Donation</a>
+    </li>
+    <li {% ifactive "individualask_create" %}class="active"{% endifactive %}>
+      <a href="{% url "individualask_create" %}">Add Ask</a>
+    </li>
+    <li class="nav-header">Businesses</li>
+    <li {% ifactive "business_list" %}class="active"{% endifactive %}>
+      <a href="{% url "business_list" %}">Browse</a>
+    </li>
+    <li {% ifactive "business_create" %}class="active"{% endifactive %}>
+      <a href="{% url "business_create" %}">Add Contact</a>
+    </li>
+    <li {% ifactive "businessdonation_create" %}class="active"{% endifactive %}>
+      <a href="{% url "businessdonation_create" %}">Add Donation</a>
+    </li>
+    <li {% ifactive "businessask_create" %}class="active"{% endifactive %}>
+      <a href="{% url "businessask_create" %}">Add Ask</a>
+    </li>
+  </ul>
+</div>
+{% endblock sidenav %}

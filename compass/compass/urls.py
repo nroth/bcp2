@@ -1,23 +1,33 @@
 from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
+# Enable the admin
 from django.contrib import admin
 admin.autodiscover()
 
+from .views import RegisterView, ManageView
+
+
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'compass.views.home', name='home'),
-    # url(r'^compass/', include('compass.foo.urls')),
+    url(r'^$', 'compass.views.home', name='home'),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    # urls for my applications
+    url(r'^people/', include('people.urls')),
+    url(r'^events/', include('events.urls')),
+    url(r'^finances/', include('finances.urls')),
 
-    # Uncomment the next line to enable the admin:
+    # TODO: put the admin at a hard-to-guess URL
     url(r'^admin/', include(admin.site.urls)),
 
-    # take care of authentication
+    # for djtoken
+    url(r"^djtokeninput/", include("djtokeninput.urls")),
+
+    # for openid authentication
     url(r'^login/$', 'django_openid_auth.views.login_begin', name='openid-login'),
     url(r'^login-complete/$', 'django_openid_auth.views.login_complete', name='openid-complete'),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/',}, name='logout'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/',}, name='openid-logout'),
+
+    # put user registration & approval at the root
+    url(r'^manage/$', ManageView.as_view(), name='manage'),
+    url(r'^register/$', RegisterView.as_view(), name='register'),
 
 )

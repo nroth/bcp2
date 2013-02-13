@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load activelink %}
+
+{% block sidenav %}
+<div class="well sidebar-nav">
+  <ul class="nav nav-list">
+    <li class="nav-header">People</li>
+    <li {% ifactive "people" %}class="active"{% endifactive %}>
+      <a href="{% url "people" %}">You</a>
+    </li>
+    <li {% ifactive "people_browse" %}class="active"{% endifactive %}>
+      <a href="{% url "people_browse" %}">Browse</a>
+    </li>
+    <li {% ifactive "people_search" %}class="active"{% endifactive %}>
+      <a href="{% url "people_search" %}">Search</a>
+    </li>
+  </ul>
+</div>
+{% endblock sidenav %}
