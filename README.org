@@ -1,0 +1,2 @@
+* bcp2
+A simple data management app for bcp.org
