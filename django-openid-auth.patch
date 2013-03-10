@@ -1,0 +1,90 @@
+=== modified file 'django_openid_auth/auth.py'
+--- django_openid_auth/auth.py	2011-09-12 13:50:50 +0000
++++ django_openid_auth/auth.py	2013-02-18 06:08:37 +0000
+@@ -31,7 +31,8 @@
+ __metaclass__ = type
+ 
+ from django.conf import settings
+-from django.contrib.auth.models import User, Group
++from django.contrib.auth import get_user_model
++from django.contrib.auth.models import Group
+ from openid.consumer.consumer import SUCCESS
+ from openid.extensions import ax, sreg, pape
+ 
+@@ -51,8 +52,9 @@
+ 
+     def get_user(self, user_id):
+         try:
+-            return User.objects.get(pk=user_id)
+-        except User.DoesNotExist:
++            UserModel = get_user_model()
++            return UserModel.objects.get(pk=user_id)
++        except UserModel.DoesNotExist:
+             return None
+ 
+     def authenticate(self, **kwargs):
+@@ -158,8 +160,9 @@
+ 
+         # See if we already have this nickname assigned to a username
+         try:
+-            user = User.objects.get(username__exact=nickname)
+-        except User.DoesNotExist:
++            UserModel = get_user_model()
++            user = UserModel.objects.get(username__exact=nickname)
++        except UserModel.DoesNotExist:
+             # No conflict, we can use this nickname
+             return nickname
+ 
+@@ -192,7 +195,7 @@
+ 
+ 
+         if getattr(settings, 'OPENID_STRICT_USERNAMES', False):
+-            if User.objects.filter(username__exact=nickname).count() > 0:
++            if UserModel.objects.filter(username__exact=nickname).count() > 0:
+                 raise DuplicateUsernameViolation(
+                     "The username (%s) with which you tried to log in is "
+                     "already in use for a different account." % nickname)
+@@ -205,8 +208,8 @@
+             if i > 1:
+                 username += str(i)
+             try:
+-                user = User.objects.get(username__exact=username)
+-            except User.DoesNotExist:
++                user = UserModel.objects.get(username__exact=username)
++            except UserModel.DoesNotExist:
+                 break
+             i += 1
+         return username
+@@ -228,7 +231,8 @@
+ 
+         username = self._get_available_username(details['nickname'], openid_response.identity_url)
+ 
+-        user = User.objects.create_user(username, email, password=None)
++        UserModel = get_user_model()
++        user = UserModel.objects.create_user(username, email, password=None)
+         self.associate_openid(user, openid_response)
+         self.update_user_details(user, details, openid_response)
+ 
+
+=== modified file 'django_openid_auth/models.py'
+--- django_openid_auth/models.py	2010-08-10 08:58:07 +0000
++++ django_openid_auth/models.py	2013-02-18 06:08:12 +0000
+@@ -27,7 +27,8 @@
+ # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ # POSSIBILITY OF SUCH DAMAGE.
+ 
+-from django.contrib.auth.models import User
++#from django.contrib.auth.models import User
++from django.conf import settings
+ from django.db import models
+ 
+ 
+@@ -53,6 +54,6 @@
+ 
+ 
+ class UserOpenID(models.Model):
+-    user = models.ForeignKey(User)
++    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+     claimed_id = models.TextField(max_length=2047, unique=True)
+     display_id = models.TextField(max_length=2047)
+

@@ -1,4 +1,4 @@
-Django==1.5c1
+Django==1.5
 South==0.7.6
 Unipath==0.2.1
 django-activelink==0.3
