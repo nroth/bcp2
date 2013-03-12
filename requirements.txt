@@ -6,6 +6,5 @@ django-crispy-forms==1.2.3
 django-floppyforms==1.0
 django-openid-auth==0.4
 django-tables2==0.13.0
-djtokeninput==0.1
 python-openid==2.2.5
 wsgiref==0.1.2

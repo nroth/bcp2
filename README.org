@@ -1,2 +1,5 @@
 * bcp2
 A simple data management app for bcp.org
+* Installation
+pip install -r requirements.txt 
+pip install -e git://github.com/jschwab/djtokeninput.git#egg=djtokeninput
