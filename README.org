@@ -1,5 +1,10 @@
 * bcp2
 A simple data management app for bcp.org
+* Pre-req Installation
+1) pip install -r requirements.txt 
+2) pip install -e git://github.com/jschwab/djtokeninput.git#egg=djtokeninput
 * Installation
-pip install -r requirements.txt 
-pip install -e git://github.com/jschwab/djtokeninput.git#egg=djtokeninput
+See the Django docs for details
+* Authors
++ Josiah Schwab
++ Nathan Roth

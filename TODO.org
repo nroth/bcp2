@@ -1,0 +1,23 @@
+* Cosmetic
+** TODO General tidiness
+Lots to do here!
+** TODO Add Submit Buttons to Forms
+Some of them are missing...
+** TODO Crispy forms template?
+Potentially one of the easiest ways to uniformly tidy up the forms
+would be to write a new crispy-forms template that does just what we
+want.
+* Features
+** TODO Merge public profile & allow other contact options
+** TODO People Search
+** TODO Add Term/Role Pages/Forms
+The models and relationships already exist.
+* Populate DB
+** TODO Current Student Data
+** TODO Alumni Data
+** TODO GivetoCal Donors
+** TODO Business Donors
+* Technical
+** TODO Fix djtokeninput
+Information about a model can leak.  Require user permisssions to
+search in models.  Put these changes in jschwab's github fork.
