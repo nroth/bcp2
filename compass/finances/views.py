@@ -71,6 +71,7 @@ class IndividualCreateView(PersonRequiredMixin, CreateView):
     model = Individual
     form_class = IndividualForm
     template_name = "finances/individual_form.html"
+    success_url = "/"
 
 
 class IndividualListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):

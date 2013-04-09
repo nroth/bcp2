@@ -11,6 +11,7 @@ want.
 ** TODO Merge public profile & allow other contact options
 ** TODO People Search
 ** TODO Add Term/Role Pages/Forms
+** TODO Make person profile visible/browasable to that person, even if not public
 The models and relationships already exist.
 * Populate DB
 ** TODO Current Student Data
@@ -21,3 +22,5 @@ The models and relationships already exist.
 ** TODO Fix djtokeninput
 Information about a model can leak.  Require user permisssions to
 search in models.  Put these changes in jschwab's github fork.
+* Docs/Help
+** Login page needs instructions, especially regarding linked accounts (don't want people to be confused when they try to sign in with the wrong account).
