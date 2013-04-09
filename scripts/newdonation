@@ -1,0 +1,241 @@
+#!/usr/bin/env python26
+import sys
+import email
+import datetime
+import MySQLdb as db
+import ConfigParser
+import logging
+
+# This script takes a file as an argument from the command line, assumed to be formatted as a MIME document. It prints to stdout a list ordered according to the fields present in a standard Cal donation notification email.
+
+# Define the SQL insert statements we're going to use
+insert_contact = """
+  INSERT INTO gifts_contact
+    (name, street, city, state, postcode, country, email)
+  VALUES (%s,%s,%s,%s,%s,%s,%s)"""
+
+insert_donation = """
+  INSERT INTO gifts_donation
+    (contact_id, amount, date, matching_funds, matching_source, publish,
+    comments, referrer, confirmation_number, fund_number)
+  VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+def write_to_db(conn, donor_data):
+    c = conn.cursor()
+
+    # construct contact data
+    # (name, street, city, state, postcode, country, email)
+
+    if donor_data['Spouse Full Name']:
+        name = "%s and %s" % (donor_data['Donor Name'], donor_data['Spouse Full Name'])
+    else:
+        name = donor_data['Donor Name']
+        
+    if donor_data['Street Address2']:
+        street = "%s %s" % (donor_data['Street Address'], donor_data['Street Address2'])
+    else:
+        street = donor_data['Street Address']
+
+    contact_data = (name, street, donor_data['City'], donor_data['State'],
+                    donor_data['Zip/Postal Code'], donor_data['Country'], donor_data['Email'])
+	
+
+    # Insert data in DB
+    c.execute(insert_contact, contact_data)
+
+    # construct donation data
+    # (contact_id, amount, date, matching_funds, matching_source, publish,
+    # comments, referrer, confirmation_number, fund_number)
+
+    ds = donor_data['Gift Receipt Date'].split("/")
+    date = "-".join((ds[2], ds[0], ds[1]))
+
+    donation_data = (c.lastrowid,
+                     donor_data['Gift Amount'],
+		     date,
+                     donor_data['Matching Funds'] == "YES" or donor_data['Spouse Matching Funds'] == "YES",
+                     donor_data['Matching Fund Company'],
+                     donor_data['Permission to publish'] == "YES",
+                     donor_data['Giver Comments'] + donor_data['Giver Note'],
+                     donor_data['Referred By'],
+                     donor_data['Gift Confirmation number'],
+                     donor_data['Fund Number'])
+
+
+    c.execute(insert_donation, donation_data)
+
+    conn.commit()
+    c.close()
+
+# get a handle to the mysql db
+def connect_mysql(config):
+    return db.connect(user = config.get('client','user'),
+                      db = config.get('client','database'),
+                      passwd = config.get('client','password'))
+
+def process_message(message):
+
+    # Now attempt to parse the message and print the list
+    try:
+
+        # This first command separates all parts of the message such as "from", "to", "subject", time received, and body text.
+
+        
+        
+        for part in message.walk():
+            if part.get_content_type() == 'text/plain':
+                message_body_string = part.get_payload()
+
+        message_body_lines = message_body_string.split('\n')
+
+        print(message_body_lines)
+
+        donor_data = {}
+
+        # Go through message body line by line and pull out the entry for each field
+                            
+        for line in message_body_lines:
+            found = line.find(":")
+            if (found > -1):
+                sep = ':'
+                field_data = line.split(sep,1)[1].strip(" \t>")
+                field_name = line.split(sep,1)[0].strip(" \t>")
+
+                # handle a few edge cases
+                if (field_name == "Gift Amount"):
+                    field_data = field_data.replace(",","")
+
+                if field_name == "Gift receival date is":
+                    field_name = "Gift Receipt Date"
+
+                if (field_name == "City State/Province"):
+                    city, state = [x.strip() for x in field_data.split(",", 1)]
+		    donor_data['City'] = city
+                    donor_data['State'] = state
+		else:
+		    donor_data[field_name] = field_data		
+
+
+        return(donor_data)
+
+
+    except:
+        logging,error("Unable to process message")
+        sys.exit()
+
+
+
+# Gift Confirmation number
+# Gift Receipt Date
+
+# Donor Name
+# Joint Gift
+# Spouse Full Name
+# Street Address
+# Street Address2
+# City State/Province
+# Zip/Postal Code
+# Country
+# Email
+
+# Permission to publish
+# Recognized as
+# Matching Funds           
+# Spouse Matching Funds    
+# Matching Fund Company    
+# Donor Class Year         
+# Donor Degree             
+# Gift Amount              
+# Fund Number              
+# Fund Description         
+# Giver Comments           
+# Solicitation Code        
+# CADS ID                  
+# Giver Note               
+# Referred By              
+
+
+def is_valid_data(donor_data):
+
+    contact_keys = ('Donor Name',
+                    'Spouse Full Name',
+                    'Street Address',
+                    'Street Address2',
+                    'City',
+                    'State',
+                    'Zip/Postal Code',
+                    'Country',
+                    'Email')
+
+    donation_keys = ('Gift Receipt Date',
+                     'Gift Amount',
+                     'Matching Funds',
+                     'Spouse Matching Funds',
+                     'Matching Fund Company',
+                     'Permission to publish',
+                     'Giver Comments',
+                     'Giver Note',
+                     'Referred By',
+                     'Gift Confirmation number',
+                     'Fund Number')
+
+    is_valid = True
+
+    for k in contact_keys:
+        if not k in donor_data:
+            logging.warning("Missing %s" % k)
+            valid = False
+
+    for k in donation_keys:
+        if not k in donor_data:
+            logging.warning("Missing %s" % k)
+            is_valid = False
+
+    return is_valid
+
+
+if __name__ == "__main__":
+
+    # start logging 
+
+    LOGFILE = "/var/log/newdonations.log"
+    FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
+    logging.basicConfig(format=FORMAT, filename = LOGFILE, level=logging.DEBUG)
+
+    logging.info("newdonation script triggered")
+
+    # get the config file
+    config = ConfigParser.RawConfigParser()
+    config.read("/opt/www/django/productiondb.cnf")
+
+    # turn stdin into an email message
+    try:
+        message = email.message_from_file(sys.stdin)        
+        logging.info("Processing %s" % message['Message-ID'])
+    except:
+        logging.error("Failed to parse email message")
+        sys.exit()
+
+    # get the database connection
+    try:
+        conn = connect_mysql(config)
+    except:
+        logging.error("Failed to open database connection")
+        sys.exit()
+
+    # process message
+    donor_data = process_message(message)
+
+    if is_valid_data(donor_data):
+        try:
+            write_to_db(conn, donor_data)
+        except:
+            logging.error("Failed to write to database")
+    else:
+        logging.error("Message was invalid")
+
+    # close the database connection
+    conn.close()
+
+    logging.info("Processing Completed")
+        
