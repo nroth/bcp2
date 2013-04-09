@@ -7,11 +7,13 @@ Some of them are missing...
 Potentially one of the easiest ways to uniformly tidy up the forms
 would be to write a new crispy-forms template that does just what we
 want.
+** TODO Should have a finances/individuals/asks/ page and finances/business/asks/ page. Also, it is currently not possible to "Add Asks" because there is no way to create a campaign
 * Features
 ** TODO Merge public profile & allow other contact options
 ** TODO People Search
 ** TODO Add Term/Role Pages/Forms
 ** TODO Make person profile visible/browasable to that person, even if not public
+** TODO Allow users to update information in /finances/ (some of the code exists for this, but not fully deployed)
 The models and relationships already exist.
 * Populate DB
 ** TODO Current Student Data
