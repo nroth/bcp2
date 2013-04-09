@@ -70,10 +70,20 @@ class IndividualForm(forms.ModelForm):
     class Meta:
         model = Individual
 
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+        super(IndividualForm, self).__init__(*args, **kwargs)
+
 
 class BusinessForm(forms.ModelForm):
     class Meta:
         model = Business
+
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+        super(BusinessForm, self).__init__(*args, **kwargs)
 
 
 class IndividualAskForm(forms.ModelForm):
@@ -87,6 +97,11 @@ class IndividualAskForm(forms.ModelForm):
     class Meta:
         model = IndividualAsk
 
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+        super(IndividualAskForm, self).__init__(*args, **kwargs)
+
 
 class BusinessAskForm(forms.ModelForm):
 
@@ -99,18 +114,37 @@ class BusinessAskForm(forms.ModelForm):
     class Meta:
         model = BusinessAsk
 
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+        super(BusinessAskForm, self).__init__(*args, **kwargs)
+
 
 class IndividualDonationForm(forms.ModelForm):
 
     class Meta:
         model = IndividualDonation
 
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+        super(IndividualDonationForm, self).__init__(*args, **kwargs)
+
 
 class BusinessDonationForm(forms.ModelForm):
     class Meta:
         model = BusinessDonation
 
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+        super(BusinessDonationForm, self).__init__(*args, **kwargs)
 
 class CampaignForm(forms.ModelForm):
     class Meta:
         model = Campaign
+
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Submit'))
+        super(CampaignForm, self).__init__(*args, **kwargs)
