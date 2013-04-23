@@ -11,6 +11,15 @@
     <li {% ifactive "donation_search" %}class="active"{% endifactive %}>
       <a href="{% url "donation_search" %}">Search</a>
     </li>
+
+    <li class="nav-header">Campaigns</li>
+    <li {% ifactive "campaign_list" %}class="active"{% endifactive %}>
+      <a href="{% url "campaign_list" %}">Browse</a>
+    </li>
+    <li {% ifactive "campaign_create" %}class="active"{% endifactive %}>
+      <a href="{% url "campaign_create" %}">Add Campaign</a>
+    </li>
+
     <li class="nav-header">Individuals</li>
     <li {% ifactive "individual_list" %}class="active"{% endifactive %}>
       <a href="{% url "individual_list" %}">Browse</a>

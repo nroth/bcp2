@@ -137,7 +137,7 @@ class IndividualAskCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = IndividualAsk
     form_class = IndividualAskForm
     template_name = "finances/form.html"
-    success_url = "/finances/"
+    success_url = "/finances/individual/"
     success_message = "Ask info created successfully"
 
 
@@ -318,6 +318,7 @@ class CampaignListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
 
 class CampaignCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = Campaign
+    form_class = CampaignForm
     template_name = "finances/form.html"
     success_url = "/finances/"
     success_message = "Campaign info created sucessfully"

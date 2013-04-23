@@ -7,7 +7,6 @@ Some of them are missing...
 Potentially one of the easiest ways to uniformly tidy up the forms
 would be to write a new crispy-forms template that does just what we
 want.
-** TODO Should have a finances/individuals/asks/ page and finances/business/asks/ page. Also, it is currently not possible to "Add Asks" because there is no way to create a campaign
 * Features
 ** TODO Merge public profile & allow other contact options
 ** TODO People Search
