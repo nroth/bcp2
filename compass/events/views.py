@@ -10,7 +10,7 @@ from .forms import EventForm
 class EventCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = Event
     form_class = EventForm
-    template_name_suffix = '_create_form'
+    template_name = 'event_create_form.html'
     success_url = "/events/"
     success_message = "Your event was created successfully"
 
@@ -18,7 +18,7 @@ class EventCreateView(PersonRequiredMixin, MessageMixin, CreateView):
 class EventUpdateView(PersonRequiredMixin, MessageMixin,  UpdateView):
     model = Event
     form_class = EventForm
-    template_name_suffix = '_update_form'
+    template_name = 'event_update_form.html'
     success_url = "/events/update/"
     success_message = "Your event was updated successfully"
 
@@ -58,7 +58,7 @@ class EventUpdateTable(PersonRequiredMixin, tables.Table):
 class EventUpdateListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = Event
     table_class = EventUpdateTable
-    template_name_suffix = '_update_list'
+    template_name = 'event_update_list.html'
     table_pagination = False
 
     def get_queryset(self):
