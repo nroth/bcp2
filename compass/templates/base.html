@@ -48,9 +48,13 @@
               <li {% ifstartswith "events" %}class="active"{% endifstartswith %}>
                 <a href="{% url "events" %}">Events</a>
               </li>
+              {% for group in user.groups %}
+              {% if group.name = "finance" %}
               <li {% ifstartswith "finances" %}class="active"{% endifstartswith %}>
                 <a href="{% url "finances" %}">Finances</a>
               </li>
+              {% endif %}
+              {% endfor %}
               {% endif %}
             </ul>
             <ul class="nav pull-right">
