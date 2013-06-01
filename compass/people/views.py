@@ -19,7 +19,7 @@ class ContactInfoUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
 
     model = Person
     form_class = ContactInfoForm
-    template_name = "people/update.html"
+    template_name = "update.html"
     success_url = "/"
     success_message = "Contact info updated"
 
@@ -31,7 +31,7 @@ class PrivacyInfoUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
 
     model = Person
     form_class = PrivacyInfoForm
-    template_name = "people/update.html"
+    template_name = "update.html"
     success_url = "/"
     success_message = "Privacy info updated"
 
@@ -41,7 +41,7 @@ class PrivacyInfoUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
 
 class PersonDetailView(PersonRequiredMixin, DetailView):
     model = Person
-    template_name = "people/detail.html"
+    template_name = "detail.html"
 
 
 class PersonTable(tables.Table):
@@ -58,9 +58,9 @@ class PersonListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = Person
     table_class = PersonTable
     table_pagination = False
-    template_name = "people/list.html"
+    template_name = "list.html"
 
 
 @user_passes_test(is_person, login_url="/")
 def search(request):
-    return render(request, 'people/search.html')
+    return render(request, 'search.html')
