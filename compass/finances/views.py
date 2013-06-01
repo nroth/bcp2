@@ -70,7 +70,7 @@ class IndividualDonationTable(BootstrapTable):
 class IndividualCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = Individual
     form_class = IndividualForm
-    template_name = "finances/individual_form.html"
+    template_name = "individual_form.html"
     success_url = "/finances/individual/"
     success_message = "Individual info created successfully"
 
@@ -104,7 +104,7 @@ class IndividualDetailView(PersonRequiredMixin, DetailView):
 class IndividualUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = Individual
     form_class = IndividualForm
-    template_name = "finances/individual_form.html"
+    template_name = "individual_form.html"
     success_url = "/finances/individual/"
     success_message = "Individual info updated successfully"
 
@@ -112,7 +112,7 @@ class IndividualUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
 class IndividualDonationCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = IndividualDonation
     form_class = IndividualDonationForm
-    template_name = "finances/individualdonation_form.html"
+    template_name = "individualdonation_form.html"
     success_url = "/finances/donations/individual/"
     success_message = "Donation info created successfully"
 
@@ -128,35 +128,35 @@ class IndividualDonationListView(PersonRequiredMixin, tables.SingleTableMixin, L
 class IndividualDonationUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = IndividualDonation
     form_class = IndividualDonationForm
-    template_name = "finances/individualdonation_form.html"
+    template_name = "individualdonation_form.html"
     success_url = "/finances/donations/individual/"
     success_message = "Donation info updated successfully"
-    
+
 
 class IndividualAskCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = IndividualAsk
     form_class = IndividualAskForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/individual/"
     success_message = "Ask info created successfully"
 
 
 class IndividualAskDetailView(PersonRequiredMixin, DetailView):
     model = IndividualAsk
-    template_name = "finances/detail.html"
+    template_name = "detail.html"
 
 
 class IndividualAskListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = IndividualAsk
     table_class = IndividualAskTable
     table_pagination = False
-    template_name = "finances/asklist.html"
+    template_name = "asklist.html"
 
 
 class IndividualAskUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = IndividualAsk
     form_class = IndividualAskForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/"
     success_message = "Ask info updated successfully"
 
@@ -169,7 +169,7 @@ class BusinessTable(BootstrapTable):
         model = Business
         fields = ('name',)
 
-        
+
 
 class BusinessAskTable(BootstrapTable):
 
@@ -204,7 +204,7 @@ class BusinessDonationTable(BootstrapTable):
 class BusinessCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = Business
     form_class = BusinessForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/business/"
     success_message = "Business info created successfully"
 
@@ -239,7 +239,7 @@ class BusinessDetailView(PersonRequiredMixin, DetailView):
 class BusinessUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = Business
     form_class = BusinessForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/business/"
     success_message = "Business info updated successfully"
 
@@ -247,7 +247,7 @@ class BusinessUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
 class BusinessDonationCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = BusinessDonation
     form_class = BusinessDonationForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/business/"
     success_message = "Donation info created successfully"
 
@@ -255,20 +255,20 @@ class BusinessDonationCreateView(PersonRequiredMixin, MessageMixin, CreateView):
 
 class BusinessDonationDetailView(PersonRequiredMixin, DetailView):
     model = BusinessDonation
-    template_name = "finances/detail.html"
+    template_name = "detail.html"
 
 
 class BusinessDonationListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = BusinessDonation
     table_class = BusinessDonationTable
     table_pagination = False
-    template_name = "finances/donationlist.html"
+    template_name = "donationlist.html"
 
 
 class BusinessDonationUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = BusinessDonation
     form_class = BusinessDonationForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/business/"
     success_message = "Donation info updated successfully"
 
@@ -276,26 +276,26 @@ class BusinessDonationUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
 class BusinessAskCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = BusinessAsk
     form_class = BusinessAskForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/business/"
     success_message = "Ask info created successfully"
 
 class BusinessAskDetailView(PersonRequiredMixin, DetailView):
     model = BusinessAsk
-    template_name = "finances/detail.html"
+    template_name = "detail.html"
 
 
 class BusinessAskListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = BusinessAsk
     table_class = BusinessAskTable
     table_pagination = False
-    template_name = "finances/asklist.html"
+    template_name = "asklist.html"
 
 
 class BusinessAskUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = BusinessAsk
     form_class = BusinessAskForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/business/"
     success_message = "Ask info updated successfully"
 
@@ -313,13 +313,13 @@ class CampaignListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = Campaign
     table_class = CampaignTable
     table_pagination = False
-    template_name = "finances/list.html"
+    template_name = "list.html"
 
 
 class CampaignCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = Campaign
     form_class = CampaignForm
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/"
     success_message = "Campaign info created sucessfully"
 
@@ -345,7 +345,7 @@ class CampaignDetailView(PersonRequiredMixin, DetailView):
 
 class CampaignUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = Campaign
-    template_name = "finances/form.html"
+    template_name = "form.html"
     success_url = "/finances/"
     success_message = "Campaign info updated sucessfully"
 
@@ -359,13 +359,13 @@ def home(request):
     RequestConfig(request, paginate = False).configure(recent_individual_donations)
     RequestConfig(request, paginate = False).configure(recent_business_donations)
 
-    return render(request, 'finances/index.html',
+    return render(request, 'index.html',
                   {'recent_individual': recent_individual_donations,
                    'recent_business': recent_business_donations})
 
 
 class IndividualSearchFormView(PersonRequiredMixin, FormView):
-    template_name = "finances/search.html"
+    template_name = "search.html"
     form_class = IndividualSearchForm
 
     def form_valid(self, form):
