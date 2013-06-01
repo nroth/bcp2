@@ -38,6 +38,7 @@ class EventTable(tables.Table):
 
 class EventListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = Event
+    template_name = 'event_list.html'
     table_class = EventTable
     table_pagination = False
 
