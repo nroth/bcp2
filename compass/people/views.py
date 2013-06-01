@@ -12,7 +12,7 @@ from .forms import ContactInfoForm, PrivacyInfoForm
 
 @user_passes_test(is_person, login_url="/")
 def index(request):
-    return render(request, 'people/index.html')
+    return render(request, 'index.html')
 
 
 class ContactInfoUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
