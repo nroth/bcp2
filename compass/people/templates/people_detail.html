@@ -1,4 +1,5 @@
-{% extends "people.html" %}
+{% extends "people_base.html" %}
+{% load render_table from django_tables2 %}
 
 {% block title%}{{ person.first_name }} {{ person.last_name }}{% endblock %}
 
@@ -19,6 +20,12 @@
 {% else %}
 <p>{{ person }} has chosen not to make any information available.</p>
 {% endif %}
+
+<h3>Roles</h3>
+{% render_table termtable %}
+
 {% endblock %}
+
+
 
 {% block footer %}{% endblock %}

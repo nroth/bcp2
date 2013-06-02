@@ -44,9 +44,12 @@ class Person(models.Model):
     about = models.TextField(blank = True)
 
     # privacy controls
-    public_profile = models.BooleanField(default = False)
-    allow_compass_contact = models.BooleanField(default = True)
-    allow_other_contact = models.BooleanField(default = False)
+    public_profile = models.BooleanField(
+        "Other Compass students & alumni can view my profile",
+        default = False)
+    allow_compass_contact = models.BooleanField(
+        "Compass can send me official communications (e.g. newsletter)",
+        default = True)
 
     # roles
     roles = models.ManyToManyField(Role, through = 'Term')
