@@ -68,3 +68,4 @@ class EventUpdateListView(PersonRequiredMixin, tables.SingleTableMixin, ListView
 
 class EventDetailView(PersonRequiredMixin, DetailView):
     model = Event
+    template_name = 'event_detail.html'

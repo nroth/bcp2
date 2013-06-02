@@ -1,0 +1,24 @@
+{% extends "people_base.html" %}
+
+{% block title%}Your Profile{% endblock %}
+
+{% block content %}
+<h3>Your Information</h3>
+<address>
+<strong>{{ user.person.name }}</strong><br>
+{{ user.person.content_type.name }}<br>
+{{ user.person.street }}<br>
+{{ user.person.city }}, {{ user.person.state }} {{ user.person.postcode }}<br>
+{{ user.person.country }}<br>
+{{ user.person.email }}
+</address>
+
+<h3>Your Roles</h3>
+{% for role in user.person.roles.all %}
+
+{% endfor %}
+
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -77,6 +77,7 @@ class IndividualCreateView(PersonRequiredMixin, MessageMixin, CreateView):
 
 class IndividualListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = Individual
+    template_name = "individual_list.html"
     table_class = IndividualTable
     table_pagination = False
 
@@ -211,6 +212,7 @@ class BusinessCreateView(PersonRequiredMixin, MessageMixin, CreateView):
 
 class BusinessListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     model = Business
+    template_name = "business_list.html"
     table_class = BusinessTable
     table_pagination = False
 
@@ -232,7 +234,6 @@ class BusinessDetailView(PersonRequiredMixin, DetailView):
         context['asks'] =  ask_table
         context['stats'] = self.object.businessdonation_set.all().aggregate(*[f('value') for f in [Avg, Count, Min, Max, Sum]])
 
-        print(context['stats'])
         return context
 
 
@@ -359,7 +360,7 @@ def home(request):
     RequestConfig(request, paginate = False).configure(recent_individual_donations)
     RequestConfig(request, paginate = False).configure(recent_business_donations)
 
-    return render(request, 'index.html',
+    return render(request, 'finances_index.html',
                   {'recent_individual': recent_individual_donations,
                    'recent_business': recent_business_donations})
 
