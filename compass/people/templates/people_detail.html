@@ -1,27 +1,27 @@
 {% extends "people_base.html" %}
 {% load render_table from django_tables2 %}
 
-{% block title%}{{ person.first_name }} {{ person.last_name }}{% endblock %}
+{% block title%}{{ person.name }}{% endblock %}
 
 {% block content %}
 
+<h3>Contact Information</h3>
+
 {% if person.public_profile %}
-
-<h3>Contact Info</h3>
-
-
-<address>
-{{ person.name }}<br>
-{{ person.street }}<br>
-{{ person.city }}, {{ person.state }} {{ person.postcode }}<br>
-{{ person.phone }}
-</address>
+<dl class="dl-horizontal">
+  <dt>Name</dt><dd>{{ person.name }}</dd>
+  <dt>Address</dt><dd>{{ person.street }}, {{ person.city }}, {{ person.state }} {{ person.postcode }}, {{ person.country }}</dd>
+  <dt>Phone</dt><dd>{{ person.phone }}</dd>
+  <dt>Email</dt><dd><a href="mailto:{{ person.email }}">{{ person.email }}</a></dd>
+  <dt>Facebook</dt><dd><a href="mailto:{{ person.facebook }}">{{ person.facebook }}</a></dd>
+  <dt>Website</dt><dd><a href="mailto:{{ person.website }}">{{ person.website }}</a></dd>
+</dl>
 
 {% else %}
-<p>{{ person }} has chosen not to make any information available.</p>
+<p>{{ person }} has chosen not to make any contact information available.</p>
 {% endif %}
 
-<h3>Roles</h3>
+<h3>Involvement</h3>
 {% render_table termtable %}
 
 {% endblock %}
