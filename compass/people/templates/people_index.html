@@ -1,23 +1,30 @@
 {% extends "people_base.html" %}
+{% load render_table from django_tables2 %}
 
 {% block title%}Your Profile{% endblock %}
 
 {% block content %}
-<h3>Your Information</h3>
-<address>
-<strong>{{ user.person.name }}</strong><br>
-{{ user.person.content_type.name }}<br>
-{{ user.person.street }}<br>
-{{ user.person.city }}, {{ user.person.state }} {{ user.person.postcode }}<br>
-{{ user.person.country }}<br>
-{{ user.person.email }}
-</address>
+<h3>Your Contact Information <a href="{% url "contact" %}">(update)</a></h3>
 
-<h3>Your Roles</h3>
-{% for role in user.person.roles.all %}
+<dl class="dl-horizontal">
+  <dt>Name</dt><dd>{{ user.person.name }}</dd>
+  <dt>Address</dt><dd>{{ user.person.street }}, {{ user.person.city }}, {{ user.person.state }} {{ user.person.postcode }}, {{ user.person.country }}</dd>
+  <dt>Phone</dt><dd>{{ user.person.phone }}</dd>
+  <dt>Email</dt><dd><a href="mailto:{{ user.person.email }}">{{ user.person.email }}</a></dd>
+  <dt>Facebook</dt><dd><a href="mailto:{{ user.person.facebook }}">{{ user.person.facebook }}</a></dd>
+  <dt>Website</dt><dd><a href="mailto:{{ user.person.website }}">{{ user.person.website }}</a></dd>
+</dl>
 
-{% endfor %}
+<h3>Your Privacy Settings <a href="{% url "privacy" %}">(update)</a></h3>
 
+<dl class="dl-horizontal">
+  <dt>Others</dt><dd>Other Compass students & alumni <em>{% if user.person.public_profile %}can{% else %}cannot{% endif %}</em> view my profile</dd>
+  <dt>Compass</dt><dd>Compass <em>{% if user.person.allow_compass_contact %}can{% else %}cannot{% endif %}</em> send me official communications (e.g. newsletter)</dd>
+</dl>
+
+
+<h3>Your Involvement</h3>
+{% render_table termtable %}
 
 {% endblock %}
 

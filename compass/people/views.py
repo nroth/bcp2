@@ -2,17 +2,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
+from django.core.urlresolvers import reverse, reverse_lazy
 
 import django_tables2 as tables
 
 from compass.views import is_person, PersonRequiredMixin, LoginRequiredMixin, is_admin, MessageMixin
 from .models import Person, CompassUser, Term, Role
 from .forms import ContactInfoForm, PrivacyInfoForm, TermForm
-
-
-@user_passes_test(is_person, login_url="/")
-def index(request):
-    return render(request, 'people_index.html')
 
 
 class PersonTermTable(tables.Table):
@@ -25,14 +21,13 @@ class PersonTermTable(tables.Table):
         attrs = {'class': 'table table-condensed table-hover table-bordered'}
 
 
-
 class ContactInfoUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
 
     model = Person
     form_class = ContactInfoForm
     template_name = "people_update.html"
-    success_url = "/"
-    success_message = "Contact info updated"
+    success_url = reverse_lazy('people')
+    success_message = "Contact information updated"
 
     def get_object(self, queryset = None):
         return self.request.user.person
@@ -43,8 +38,8 @@ class PrivacyInfoUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
     model = Person
     form_class = PrivacyInfoForm
     template_name = "people_update.html"
-    success_url = "/"
-    success_message = "Privacy info updated"
+    success_url = reverse_lazy('people')
+    success_message = "Privacy settings updated"
 
     def get_object(self, queryset = None):
         return self.request.user.person
@@ -70,7 +65,7 @@ class PersonTable(tables.Table):
 
     class Meta:
         model = Person
-        fields = ('name', 'public_profile')
+        fields = ('name', 'content_type')
         attrs = {'class': 'table table-condensed table-hover table-bordered'}
 
 
@@ -136,3 +131,13 @@ class RoleDetailView(PersonRequiredMixin, DetailView):
         tables.RequestConfig(self.request, paginate = False).configure(termtable)
         context['termtable'] = termtable
         return context
+
+
+@user_passes_test(is_person, login_url="/")
+def index(request):
+
+    terms = Term.objects.filter(role=request.user.person)
+    termtable = PersonTermTable(terms)
+    tables.RequestConfig(request, paginate = False).configure(termtable)
+
+    return render(request, 'people_index.html', { 'termtable': termtable })
