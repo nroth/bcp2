@@ -96,8 +96,10 @@ urlpatterns = patterns('',
     url(r'^campaign/(?P<pk>\d+)/$',
         CampaignDetailView.as_view(),
         name = 'campaign_detail'),
-    url(r'^campaign/edit/(?P<pk>\d+)/$',
-        CampaignUpdateView.as_view(),
+    url(r'^update/$',
+        CampaignUpdateListView.as_view(),
+        name = 'campaigns_update'),
+    url(r'^update/(?P<pk>\d+)/$', CampaignUpdateView.as_view(),
         name = 'campaign_update'),
 
 )

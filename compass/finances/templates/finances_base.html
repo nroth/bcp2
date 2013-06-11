@@ -19,6 +19,9 @@
     <li {% ifactive "campaign_create" %}class="active"{% endifactive %}>
       <a href="{% url "campaign_create" %}">Add Campaign</a>
     </li>
+    <li {% ifactive "campaigns_update" %}class="active"{% endifactive %}>
+      <a href="{% url "campaigns_update" %}">Update Existing Campaign</a>
+    </li>
 
     <li class="nav-header">Individuals</li>
     <li {% ifactive "individual_list" %}class="active"{% endifactive %}>

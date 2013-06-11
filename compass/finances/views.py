@@ -316,7 +316,6 @@ class CampaignListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     table_pagination = False
     template_name = "list.html"
 
-
 class CampaignCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = Campaign
     form_class = CampaignForm
@@ -344,12 +343,26 @@ class CampaignDetailView(PersonRequiredMixin, DetailView):
         return context
 
 
-class CampaignUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
+class CampaignUpdateView(MessageMixin, UpdateView):
     model = Campaign
     template_name = "form.html"
-    success_url = "/finances/"
-    success_message = "Campaign info updated sucessfully"
 
+
+class CampaignUpdateTable(tables.Table):
+
+    title = tables.LinkColumn("campaign_update", args=[tables.utils.A("pk")])
+
+    class Meta:
+        model = Campaign
+        fields = ('name','start_date', 'end_date')
+        attrs = {'class': 'table table-condensed table-hover table-bordered'}
+
+
+class CampaignUpdateListView(tables.SingleTableMixin, ListView):
+    model = Campaign
+    table_class = CampaignUpdateTable
+    template_name = "/finances/campaign_list.html"
+    table_pagination = False
 
 
 def home(request):
