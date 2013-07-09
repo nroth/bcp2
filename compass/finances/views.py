@@ -315,6 +315,10 @@ class CampaignListView(PersonRequiredMixin, tables.SingleTableMixin, ListView):
     table_class = CampaignTable
     table_pagination = False
     template_name = "list.html"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 856a4f5340f06c2963fce4554cd92b1e66e4f921
 
 class CampaignCreateView(PersonRequiredMixin, MessageMixin, CreateView):
     model = Campaign
@@ -343,12 +347,20 @@ class CampaignDetailView(PersonRequiredMixin, DetailView):
         return context
 
 
+<<<<<<< HEAD
 class CampaignUpdateView(MessageMixin, UpdateView):
     model = Campaign
     template_name = "form.html"
 
 
 class CampaignUpdateTable(tables.Table):
+=======
+class CampaignUpdateView(PersonRequiredMixin, MessageMixin, UpdateView):
+    model = Campaign
+    template_name = "form.html"
+    success_url = "/finances/"
+    success_message = "Campaign info updated sucessfully"
+>>>>>>> 856a4f5340f06c2963fce4554cd92b1e66e4f921
 
     title = tables.LinkColumn("campaign_update", args=[tables.utils.A("pk")])
 
